@@ -31,7 +31,7 @@ public class ClienteService {
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 	
-	public Cliente find(Integer id) {
+	public Cliente findById(Integer id) {
 		Optional<Cliente> obj = clienteRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
@@ -46,13 +46,13 @@ public class ClienteService {
 	}
 	
 	public Cliente update(Cliente obj) {
-		Cliente newObj = find(obj.getId());
+		Cliente newObj = findById(obj.getId());
 		updateData(newObj, obj);
 		return clienteRepository.save(newObj);
 	}
 
 	public void delete(Integer id) {
-		find(id);
+		findById(id);
 		try {
 			clienteRepository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
